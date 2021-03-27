@@ -103,7 +103,6 @@ body { padding: 0; margin: 0 }
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 200px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -114,14 +113,13 @@ body { padding: 0; margin: 0 }
   }
 
 /* Modal Content */
-.modal-content {
+/* .modal-content {
 	background-color: #fefefe;
 	margin: auto;
-	padding: 20px;
 	border: 1px solid #888;
 	width:fit-content; 
     height:fit-content; 
-}
+} */
   
   /* The Close Button */
   .close {
