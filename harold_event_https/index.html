@@ -145,14 +145,14 @@ align-items: center;
     }
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-        modalContent.style.display = "none";
-        modal.style.zIndex = 400;
-        modalContent.style.zIndex = 400;
-      }
-    }
+    // window.onclick = function (event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = "none";
+    //     modalContent.style.display = "none";
+    //     modal.style.zIndex = 400;
+    //     modalContent.style.zIndex = 400;
+    //   }
+    // }
 
     window.addEventListener("message", (event) => {
         event = JSON.parse(event.data);
