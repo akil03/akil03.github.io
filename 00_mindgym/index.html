@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>MindGym</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <section id="loading-screen" style="z-index:1000">
+
+    <div id="loader"></div>
+
+  </section>
+  <style>
+    .modal-content {
+      transform: translate(-1.9%, 5%) !important;
+    }
+
+    #myModal {
+
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+  </style>
+</head>
+
+<body style="
+height: 100vh;
+width: 100vw;
+position: fixed;
+justify-content: center;
+display: flex;
+align-items: center;
+">
+  <div id="unity-container" class="unity-desktop" style="z-index:999">
+    <canvas id="unity-canvas"></canvas>
+    <!-- <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div> -->
+    <!-- <div id="unity-mobile-warning">
+        WebGL builds are not supported on mobile devices.
+      </div> -->
+    <!-- <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Unity WebTemplate_2020.2</div>
+      </div> -->
+  </div>
+  <div id="myModal" class="modal" style="display: none;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+
+    <!-- Modal content -->
+    <div class="modal-content" id="myModalContent" style="display: none;">
+      <span aria-hidden="true" id="closeModalBtn" class="close" data-dismiss="modal" aria-label="Close">&times;</span>
+      <p><iframe id="iFrame" style="width: 46vw !important;height: 55vh !important" src="https://www.zoom.us/"
+          frameborder="0" allow="aclipboard-write; microphone; camera; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </p>
+    </div>
+
+  </div>
+  <script>
+    var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/00_mindgym.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/00_mindgym.data.unityweb",
+        frameworkUrl: buildUrl + "/00_mindgym.framework.js.unityweb",
+        codeUrl: buildUrl + "/00_mindgym.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "AuraGlobal",
+        productName: "MindGym",
+        productVersion: "0.1",
+      };
+
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    //var loadingBar = document.querySelector("#unity-loading-bar");
+    //var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    //var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+    //var mobileWarning = document.querySelector("#unity-mobile-warning");
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      container.className = "unity-mobile";
+      config.devicePixelRatio = 1;
+      //window.open("https://s3.ap-south-1.amazonaws.com/shiningcloud.com/eoi2020m/index.html","_self")
+      // mobileWarning.style.display = "block";
+      // setTimeout(() => {
+      //   mobileWarning.style.display = "none";
+      // }, 5000);
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+    } else {
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+    }
+    //loadingBar.style.display = "block";
+
+    var script = document.createElement("script");
+    var UnityLayerInstance = null;
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        if (progress == 1) {
+
+
+        }
+        //progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        UnityLayerInstance = unityInstance;
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.classList.add('fade-out');
+        loadingScreen.addEventListener('transitionend', onTransitionEnd);
+        modalContent.style.zIndex = 400;
+        //loadingBar.style.display = "none";
+        // fullscreenButton.onclick = () => {
+        //   unityInstance.SetFullscreen(1);
+        // };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+
+    function onTransitionEnd(event) {
+
+      event.target.remove();
+
+    }
+
+    var modal = document.getElementById("myModal");
+    var modalContent = document.getElementById('myModalContent');
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closeModalBtn");
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+      modalContent.style.display = "none"
+      modal.style.zIndex = 400;
+      modalContent.style.zIndex = 400;
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    // window.onclick = function (event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = "none";
+    //     modalContent.style.display = "none";
+    //     modal.style.zIndex = 400;
+    //     modalContent.style.zIndex = 400;
+    //   }
+    // }
+
+    // document.getElementById('openModal').addEventListener('click', function () {
+    //   modal.style.display = "block";
+    //   modalContent.style.display = "block";
+    //   document.getElementById("openModal").style.display='none';
+    // });
+
+    document.body.appendChild(script);
+  </script>
+</body>
+
+</html>
